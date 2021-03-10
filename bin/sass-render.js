@@ -8,6 +8,7 @@ const { promisify } = require('util');
 const fs = require('fs');
 const sass = require('sass');
 const { argv } = require('process');
+const prettier = require('prettier');
 
 let compiledFiles = 0;
 
@@ -21,7 +22,7 @@ function css(sassFile) {
     .css.toString();
 }
 
-const template = "import { css } from 'lit-element';\n\nexport default css` {c} `;";
+const template = "import { css } from 'lit-element';\n\nexport default css` $css `;";
 
 /**
  *
@@ -33,9 +34,17 @@ function render(sassFile) {
 
   console.log(`Rendering ${sassFile}...`);
 
-  const newContent = template.replace('{c}', css(sassFile));
+  const newContent = template.replace('$css', css(sassFile));
 
-  fs.writeFileSync(sassFile.replace(/\.\w*$/, '-css.js'), newContent);
+  const prettifiedContent = prettier.format(newContent, {
+    singleQuote: true,
+    trailingComma: 'all',
+    arrowParens: 'avoid',
+    printWidth: 120,
+    parser: 'babel',
+  });
+
+  fs.writeFileSync(sassFile.replace(/\.\w*$/, '-css.js'), prettifiedContent);
 
   compiledFiles += 1;
 }

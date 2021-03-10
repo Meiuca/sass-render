@@ -1,6 +1,6 @@
 {
   "name": "jota-sass-render",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "bin": {
     "jota-sass": "bin/index.js"

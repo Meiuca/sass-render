@@ -5,9 +5,12 @@
   "bin": {
     "jota-sass": "bin/index.js"
   },
-  "files": ["bin"],
+  "files": [
+    "bin"
+  ],
   "dependencies": {
     "glob": "^7.1.6",
+    "prettier": "^2.2.1",
     "sass": "^1.32.8"
   }
 }
